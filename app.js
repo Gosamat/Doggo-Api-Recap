@@ -22,12 +22,21 @@ app.use(express.static('public'));
 
 // Home Page where you should display 5 random images of dogs via DoggoApi
 app.get("/", async (req,res)=>{
-    
+    try{
+   const numDogs5 = await myDog.getMultipleRandomDogs(5)
+   res.render('all-breeds', {numDogs5});
+    }
+    catch{
+        console.log("there was an error");
+    }
+
+
 });
 
 // Schnauzer Page where you should display 1 image of a Schnauzer (Breed) Miniature (Subreed) via DoggoApi
 app.get("/schnauzer", async (req,res)=>{
-
+    myDog.getARandomSubBreedImage('schnauzer', 'miniature')
+    .then (data => {res.render('schnauzer', {data})})
 });
 
 // Listen in PORT 3000
